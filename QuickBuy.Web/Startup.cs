@@ -21,16 +21,16 @@ namespace QuickBuy.Web
             Configuration = builder.Build();
         }
 
-        
-
         // 
         //Este método é chamado pelo tempo de execução.Use este método para adicionar serviços ao contêiner.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-
-            services.AddDbContext(QuickBuyContexto>(option => option.UseMySql());
+            var connectionString = Configuration.GetConnectionString("QuickBuyDB");
+            services.AddDbContext<QuickBuyContexto>(option => 
+                            option.UseMySql(connectionString,
+                                    m => m.MigrationAssembly("QuickBuy.Repositorio")));
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
