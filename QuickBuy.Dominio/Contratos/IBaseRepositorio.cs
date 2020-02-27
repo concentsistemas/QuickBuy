@@ -1,6 +1,14 @@
-﻿namespace QuickBuy.Dominio.Contratos
+﻿using System;
+using System.Collections.Generic;
+
+namespace QuickBuy.Dominio.Contratos
 {
-    public interface IBaseRepositorio
+    public interface IBaseRepositorio<TEntity> : IDisposable where TEntity : class
     {
+        void Adicionar(TEntity entity);
+        void ObterPorId(int id);
+        void Atualizar(TEntity entity);
+        void Remover(TEntity entity);
+        IEnumerable<TEntity> ObterTodos();
     }
 }
